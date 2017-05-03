@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Utility class for {@link Process}-related methods.
@@ -14,6 +15,28 @@ import java.util.List;
 public final class ProcessUtils {
     private ProcessUtils() {
         // Empty constructor - Utility classes should not be instanced
+    }
+
+    /**
+     * Creates a {@link ProcessBuilder} with the commands decoded from the supplied map.
+     *
+     * @param command The main command to build.
+     * @param arguments A map of additional commands to append to the main command.
+     *
+     * @return The created process builder.
+     */
+    public static ProcessBuilder buildProcess(String command, Map<String, String> arguments) {
+        List<String> commands = new LinkedList<>();
+        commands.add(command);
+
+        for (Map.Entry<String, String> entry: arguments.entrySet()) {
+            commands.add(entry.getKey());
+            if (entry.getValue() != null) {
+                commands.add(entry.getValue());
+            }
+        }
+
+        return new ProcessBuilder(commands);
     }
 
     /**

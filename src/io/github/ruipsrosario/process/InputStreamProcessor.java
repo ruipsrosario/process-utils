@@ -1,5 +1,6 @@
 package io.github.ruipsrosario.process;
 
+import java.io.IOException;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 
@@ -19,8 +20,10 @@ public interface InputStreamProcessor<T> {
      * Retrieves the results of processing the data in the underlying {@link java.io.InputStream InputStream}.
      *
      * @return The processing results.
+     *
+     * @throws IOException If an error occurred while processing the data.
      */
-    T process();
+    T process() throws IOException;
 
     /**
      * Retrieves the results of processing the data in the underlying {@link java.io.InputStream InputStream} sometime

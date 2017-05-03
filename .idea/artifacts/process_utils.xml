@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="process-utils">
+    <output-path>$PROJECT_DIR$/out/artifacts/process_utils</output-path>
+    <root id="archive" name="process-utils.jar">
+      <element id="module-output" name="process-utils" />
+    </root>
+  </artifact>
+</component>

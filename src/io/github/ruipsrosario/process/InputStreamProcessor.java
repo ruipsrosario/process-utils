@@ -1,6 +1,5 @@
 package io.github.ruipsrosario.process;
 
-import java.io.IOException;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 
@@ -14,27 +13,14 @@ import java.util.concurrent.FutureTask;
  *
  * @see InputStreamConsumer
  */
-public interface InputStreamProcessor<T> extends InputStreamConsumer {
+@FunctionalInterface
+public interface InputStreamProcessor<T> {
     /**
      * Retrieves the results of processing the data in the underlying {@link java.io.InputStream InputStream}.
      *
      * @return The processing results.
-     *
-     * @throws IllegalStateException If the data in the underlying stream hasn't been processed yet.
      */
-    T getResults() throws IllegalStateException;
-
-    /**
-     * Processes the data in the underlying {@link java.io.InputStream InputStream} and retrieves the results.
-     *
-     * @return The processing results.
-     *
-     * @throws IOException If an error occurred while processing the data.
-     */
-    default T processAndGetResults() throws IOException {
-        consume();
-        return getResults();
-    }
+    T process();
 
     /**
      * Retrieves the results of processing the data in the underlying {@link java.io.InputStream InputStream} sometime
@@ -43,6 +29,6 @@ public interface InputStreamProcessor<T> extends InputStreamConsumer {
      * @return The future processing results.
      */
     default Future<T> getResultsAsync() {
-        return new FutureTask<T>(this::processAndGetResults);
+        return new FutureTask<T>(this::process);
     }
 }
